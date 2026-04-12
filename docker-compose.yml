@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  app:
+    build : .
+    container_name : my-app
+    ports:
+    - "3000:3000"
+    depends-on:
+    - db
+    enviornment:
+      DATABASE_URL:  postgresql://praveen:password@db:5432/mydb
+    volumes:
+    - .:/app
+    restart: always
+
+  db:
+    image : postgres:latest
+    container_name: my-db
+    ports:
+      -"5432:5432"
+    environment:
+      POSTGRES_USER: praveen
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+  
+volumes:
+  pgdata
