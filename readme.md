@@ -15,3 +15,7 @@
 - push schema to db and sync them
 - docker exec -it container_name/id npx prisma db push
 
+## DOCKER COMPOSE INSTALLATION
+
+- run
+- docker-compose up
