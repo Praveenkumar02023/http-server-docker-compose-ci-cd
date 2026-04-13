@@ -6,9 +6,7 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 
 RUN npm install
-
 COPY . .
-
 ENV DATABASE_URL="postgresql://praveen:password@db:5432/mydb?schema=public"
 
 RUN npx prisma generate

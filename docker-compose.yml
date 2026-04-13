@@ -6,26 +6,32 @@ services:
     container_name : my-app
     ports:
     - "3000:3000"
-    depends-on:
+    depends_on:
     - db
-    enviornment:
+    environment:
       DATABASE_URL:  postgresql://praveen:password@db:5432/mydb
-    volumes:
-    - .:/app
     restart: always
 
   db:
-    image : postgres:latest
+    image : postgres
     container_name: my-db
     ports:
-      -"5432:5432"
+      - "5432:5432"
     environment:
       POSTGRES_USER: praveen
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydb
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/
     restart: always
   
+  prisma:
+    build: .
+    depends_on:
+      - db
+    command: npx prisma db push
+    environment:
+      DATABASE_URL: postgresql://praveen:password@db:5432/mydb
+  
 volumes:
-  pgdata
+  pgdata:
